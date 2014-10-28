@@ -61,7 +61,7 @@ end
 class EtHopIdentifiedRequest < EtHopRequest
   def self._keys() super.concat(%w(id magic)) end
   def _process(server, client)
-    server.identify(id, magic)
+    server.identify(id, magic, client)
   end
 end
 

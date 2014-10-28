@@ -52,6 +52,12 @@ class EtHopServer < TCPServer
     EtHopResponse.new(EtHopResponse::CODE_OK, id: id, magic: magic)
   end
 
+  def identify(id, magic, host)
+    raise 'Wrong magic' if magic != @magic
+    subscriber = @clients.fetch(id) { raise "Unknown client ##{id}" }
+    raise "Wrong host #{host}" if subscriber.host != host
+  end
+
   def start
     loop do
       Thread.start(accept) do |client|
